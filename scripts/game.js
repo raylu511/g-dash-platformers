@@ -104,9 +104,15 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     // debug.log([x])
     addKaboom(player.pos);
     shake();
+    go("lose")
   });
   // add level to scene
   const level = addLevel(LEVELS[levelId ?? 0], levelConf);
 });
-
+scene("lose", () => {
+	add([
+		text("You Lose"),
+	])
+	onKeyPress(() => go("game"))
+})
 go("game");
