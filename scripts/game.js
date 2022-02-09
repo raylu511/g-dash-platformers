@@ -36,9 +36,9 @@ onKeyDown('space', () => {
         player.jump()
     }
 })
-
+let spike;
 // Obstacle 
-loop(1, () => {add([
+loop(5, () => {spike = add([
     sprite('spike'),
     area(),
     outline(4),
@@ -46,7 +46,18 @@ loop(1, () => {add([
     origin("botleft"),
     color(255, 180, 255),
     move(LEFT, 240),
+    "spike"
 ])});
+
+
+player.onCollide("spike", () => {
+    // const [x, y] = player.pos
+    console.log(player.pos.y)
+
+    // debug.log([x])
+    addKaboom(player.pos);
+    shake();
+});
 
 
 const LEVELS = [
