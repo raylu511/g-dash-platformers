@@ -50,5 +50,5 @@ loop(1, () => {add([
 
 
 const LEVELS = [
-    []
+    ['']
 ]
