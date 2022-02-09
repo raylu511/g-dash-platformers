@@ -9,7 +9,7 @@ loadSprite("bean", "assets/sprites/bean.png")
 // Background
 const heightDiff = () => height() * .15;
 const map1 = add([
-    sprite('map1', {width: width(), height: height()})
+    sprite('map1', {width: width(), height: height()}),
 ])
 
 // Platform
@@ -19,7 +19,8 @@ const platform = add([
     outline(2),
     area(),
     solid(),
-    color(200,200,200)
+    color(200,200,200),
+    
 ])
 
 // Player
