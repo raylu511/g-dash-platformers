@@ -1,4 +1,6 @@
-kaboom();
+kaboom({
+    background: [0, 0, 0, 0]
+});
 
 // Load Assets
 loadSprite("main_screen", "assets/sprites/main_screen.jpg");
