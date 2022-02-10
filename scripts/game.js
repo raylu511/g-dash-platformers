@@ -16,8 +16,10 @@ loadSprite("lvl1_platform", "assets/textures/lvl1/lvl1_platform.png");
 loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png");
 loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png");
 
+let score = 0;
 let attempts = 0
 scene("game", ({ levelId } = { levelId: 0 }) => {
+  score = 0;
 
 
   const map1 = add([
@@ -50,12 +52,26 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
 
   addAttempt();
 
+  const scoreLabel = add([
+		text("Score " + score),
+		origin("center"),
+		pos(250, 80),
+		fixed(),
+	])
+
+  function addScore() {
+    score++
+    scoreLabel.text = "Score " + score;
+    // play("attempts")
+  }
+
 
   // display attempts
 
 
   player.onUpdate(() => {
     camPos(player.pos);
+    addScore();
   });
 
  
@@ -73,7 +89,6 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   player.onCollide("spike", () => {
     console.log(player);
     shake();
-  
     go("game");
   });
 
