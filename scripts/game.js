@@ -12,49 +12,6 @@ loadSprite("coin", "assets/sprites/coin.png");
 loadSprite("platform", "assets/sprites/basic_platform.png");
 loadSprite("portal", "assets/sprites/portal.png");
 
-const LEVELS = [
-  [
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                s                                              p        ",
-    "                      s      ss          sss                 p         pp       p                   ppp                        p       @",
-    "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
-  ],
-  [
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                s                                              p        ",
-    "          p            s      ss          sss                 p         pp       p                   ppp                        p      @",
-    "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
-  ],
-];
-
-const levelConf = {
-  width: 64,
-  height: 64,
-  p: () => [sprite("platform"), solid(), area(), "platform"],
-  s: () => [sprite("spike"), area(), "spike"],
-  "@": () => [sprite("portal"), area({ scale: 0.5 }),"portal"],
-};
-
 scene("game", ({ levelId } = { levelId: 0 }) => {
   gravity(3200);
   const player = add([
