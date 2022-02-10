@@ -1,56 +1,16 @@
 kaboom({
-    background: [0, 0, 0, 0]
+  background: [0, 0, 0, 0],
 });
 
 // Load Assets
 loadSprite("main_screen", "assets/sprites/main_screen.jpg");
 loadSprite("map1", "assets/sprites/map1.jpg");
-// loadSprite("spike", "assets/sprites/spike.png");
 loadSprite("spike", "assets/sprites/basic_spike.png");
 loadSprite("triangle", "assets/sprites/triangle.png");
-// loadSprite("bean", "assets/sprites/bean.png");
-loadSprite("player_cube","assets/sprites/basic_cube.png" )
-// loadSprite("grass", "assets/sprites/grass.png");
-loadSprite("platform", "assets/sprites/basic_platform.png" )
-// Background
-// const heightDiff = () => height() * .15;
-
-// Platform
-// const platform = add([
-//     rect(width(), 150),
-//     pos(0, height()- heightDiff()),
-//     outline(2),
-//     area(),
-//     solid(),
-//     color(200,200,200),
-
-// ])
-
-// // Player
-// const player = add([
-//     sprite("bean"),
-//     pos(20),
-//     body(),
-//     area()
-// ])
-
-// onKeyDown('space', () => {
-//     if (player.isGrounded()) {
-//         player.jump()
-//     }
-// })
-// let spike;
-// // Obstacle
-// loop(5, () => {spike = add([
-//     sprite('spike'),
-//     area(),
-//     outline(4),
-//     pos(width(), height() - heightDiff()),
-//     origin("botleft"),
-//     color(255, 180, 255),
-//     move(LEFT, 240),
-//     "spike"
-// ])});
+loadSprite("player_cube", "assets/sprites/basic_cube.png");
+loadSprite("coin", "assets/sprites/coin.png");
+loadSprite("platform", "assets/sprites/basic_platform.png");
+loadSprite("portal", "assets/sprites/portal.png");
 
 const LEVELS = [
   [
@@ -66,7 +26,23 @@ const LEVELS = [
     "                                                                                                                                        ",
     "                                                                                                                                        ",
     "                                                                                s                                              p        ",
-    "                      s      ss          sss                 p         pp       p                   ppp                        p        ",
+    "                      s      ss          sss                 p         pp       p                   ppp                        p       @",
+    "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+  ],
+  [
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                s                                              p        ",
+    "          p            s      ss          sss                 p         pp       p                   ppp                        p      @",
     "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
   ],
 ];
@@ -76,6 +52,7 @@ const levelConf = {
   height: 64,
   p: () => [sprite("platform"), solid(), area(), "platform"],
   s: () => [sprite("spike"), area(), "spike"],
+  "@": () => [sprite("portal"), area({ scale: 0.5 }),"portal"],
 };
 
 scene("game", ({ levelId } = { levelId: 0 }) => {
@@ -88,34 +65,40 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     // makes it fall to gravity and jumpable
     body(),
     move(RIGHT, 500),
-    // the custom component we defined above
-    // origin(""),
   ]);
 
   player.onUpdate(() => {
     camPos(player.pos);
   });
+
+  // add level to scene
+  const level = addLevel(LEVELS[levelId ?? 0], levelConf);
   onKeyDown("space", () => {
     if (player.isGrounded()) {
-      player.jump(1010);
+      player.jump(1020);
     }
   });
   player.onCollide("spike", () => {
-    // const [x, y] = player.pos
-    console.log(player.pos.y);
-
-    // debug.log([x])
-    // addKaboom(player.pos);
     shake();
-    go("lose")
+    go("lose");
   });
-  // add level to scene
-  const level = addLevel(LEVELS[levelId ?? 0], levelConf);
+
+  player.onCollide("portal", () => {
+    if (levelId + 1 < LEVELS.length) {
+      go("game", {
+        levelId: levelId + 1,
+      });
+    } else {
+      go("win");
+    }
+  });
 });
 scene("lose", () => {
-	add([
-		text("You Lose"),
-	])
-	onKeyPress(() => go("game"))
-})
+  add([text("You Lose")]);
+  onKeyPress(() => go("game"));
+});
+scene("win", () => {
+  add([text("You Win")]);
+  onKeyPress(() => go("game"));
+});
 go("game");
