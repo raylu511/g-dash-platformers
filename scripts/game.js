@@ -5,10 +5,13 @@ kaboom({
 // Load Assets
 loadSprite("main_screen", "assets/sprites/main_screen.jpg");
 loadSprite("map1", "assets/sprites/map1.jpg");
-loadSprite("spike", "assets/sprites/spike.png");
+// loadSprite("spike", "assets/sprites/spike.png");
+loadSprite("spike", "assets/sprites/basic_spike.png");
 loadSprite("triangle", "assets/sprites/triangle.png");
-loadSprite("bean", "assets/sprites/bean.png");
-loadSprite("grass", "assets/sprites/grass.png");
+// loadSprite("bean", "assets/sprites/bean.png");
+loadSprite("player_cube","assets/sprites/basic_cube.png" )
+// loadSprite("grass", "assets/sprites/grass.png");
+loadSprite("platform", "assets/sprites/basic_platform.png" )
 // Background
 // const heightDiff = () => height() * .15;
 
@@ -71,14 +74,14 @@ const LEVELS = [
 const levelConf = {
   width: 64,
   height: 64,
-  p: () => [sprite("grass"), solid(), area(), origin("bot"), "platform"],
+  p: () => [sprite("platform"), solid(), area(), origin("bot"), "platform"],
   s: () => [sprite("spike"), area(), origin("bot"), "spike"],
 };
 
 scene("game", ({ levelId } = { levelId: 0 }) => {
   gravity(3200);
   const player = add([
-    sprite("bean"),
+    sprite("player_cube"),
     pos(0, 0),
     area(),
     scale(1),
