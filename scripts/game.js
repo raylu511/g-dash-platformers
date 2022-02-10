@@ -15,11 +15,11 @@ loadSprite("frenzy", "assets/sprites/geometry_frenzy.png");
 loadSprite("lvl1_platform", "assets/textures/lvl1/lvl1_platform.png");
 loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png");
 loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png");
-
+let isNewLvl = false;
 let score = 0;
 let attempts = 0
 scene("game", ({ levelId } = { levelId: 0 }) => {
-  score = 0;
+  if(!isNewLvl) score = 0;
 
 
   const map1 = add([
@@ -89,11 +89,13 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   player.onCollide("spike", () => {
     console.log(player);
     shake();
+    isNewLvl = false;
     go("game");
   });
 
   player.onCollide("platform", (p) => {
     if (player.pos.x + 64 === p.pos.x) {
+      isNewLvl = false;
       go("game");
     }
   });
@@ -103,6 +105,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
       go("game", {
         levelId: levelId + 1,
       });
+      isNewLvl = true;
     } else {
       go("win");
     }
