@@ -59,14 +59,14 @@ const LEVELS = [
     "                                                                                                                                        ",
     "                                                                                                                                        ",
     "                                                                                                                                        ",
-    "                                                                                                              ss                       f",
-    "                                                                                                      pppppppppppppppppppppppppppppppppp",
-    "                                                                                                   ppp                                  ",
-    "                                                                                                 p                                      ",
-    "                                                                                               p                                        ",
-    "                                                              s   ss  s  s     p p p    ppppppp                                         ",
-    "                              s             s     ss    s  ppppppppppppppppppppp                                                        ",
-    "          s    ss s      sss  p         ppppppppppppppppppppp                   ssssssssssssss                                          ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                                s                                              p        ",
+    "                      s      ss          sss                 p         pp       p                   ppp                        p        ",
     "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
   ],
 ];
@@ -97,7 +97,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   });
   onKeyDown("space", () => {
     if (player.isGrounded()) {
-      player.jump(1500);
+      player.jump(1000);
     }
   });
   player.onCollide("spike", () => {
