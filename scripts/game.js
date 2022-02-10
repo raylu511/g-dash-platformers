@@ -74,15 +74,15 @@ const LEVELS = [
 const levelConf = {
   width: 64,
   height: 64,
-  p: () => [sprite("platform"), solid(), area(), origin("bot"), "platform"],
-  s: () => [sprite("spike"), area(), origin("bot"), "spike"],
+  p: () => [sprite("platform"), solid(), area(), "platform"],
+  s: () => [sprite("spike"), area(), "spike"],
 };
 
 scene("game", ({ levelId } = { levelId: 0 }) => {
   gravity(3200);
   const player = add([
     sprite("player_cube"),
-    pos(0, 0),
+    pos(-100, 750),
     area(),
     scale(1),
     // makes it fall to gravity and jumpable
@@ -97,7 +97,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   });
   onKeyDown("space", () => {
     if (player.isGrounded()) {
-      player.jump(1000);
+      player.jump(1010);
     }
   });
   player.onCollide("spike", () => {
@@ -105,7 +105,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     console.log(player.pos.y);
 
     // debug.log([x])
-    addKaboom(player.pos);
+    // addKaboom(player.pos);
     shake();
     go("lose")
   });
