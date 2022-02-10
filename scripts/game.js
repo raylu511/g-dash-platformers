@@ -1,5 +1,5 @@
 kaboom({
-  background: [0, 0, 0, 0],
+  background: [255, 255, 255, 0],
 });
 
 // Load Assets
@@ -10,13 +10,17 @@ loadSprite("triangle", "assets/sprites/triangle.png");
 loadSprite("player_cube", "assets/sprites/basic_cube.png");
 loadSprite("coin", "assets/sprites/coin.png");
 loadSprite("platform", "assets/sprites/basic_platform.png");
-loadSprite("portal", "assets/sprites/portal.png");
+loadSprite("portal", "assets/sprites/portal.png");  
+loadSprite("frenzy", "assets/sprites/geometry_frenzy.png")
+loadSprite("lvl1_platform", "assets/textures/lvl1/lvl1_platform.png")
+loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png")
+loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png")
 
 scene("game", ({ levelId } = { levelId: 0 }) => {
   gravity(3200);
   const player = add([
-    sprite("player_cube"),
-    pos(-100, 750),
+    sprite("sapiens"),
+    pos(-80, 750),
     area(),
     scale(1),
     // makes it fall to gravity and jumpable

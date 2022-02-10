@@ -37,8 +37,8 @@ const LEVELS = [
   const levelConf = {
     width: 64,
     height: 64,
-    p: () => [sprite("platform"), solid(), area(), "platform"],
-    s: () => [sprite("spike"), area(), "spike"],
+    p: () => [sprite("lvl1_platform"), solid(), area(), "platform"],
+    s: () => [sprite("lvl1_spike"), area(), "spike"],
     "@": () => [sprite("portal"), area({ scale: 0.5 }), "portal"],
   };
   
