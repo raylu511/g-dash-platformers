@@ -1,5 +1,5 @@
 kaboom({
-  background: [255, 255, 255, 0],
+  background: [0, 0, 0, 0],
 });
 
 // Load Assets
@@ -10,17 +10,20 @@ loadSprite("triangle", "assets/sprites/triangle.png");
 loadSprite("player_cube", "assets/sprites/basic_cube.png");
 loadSprite("coin", "assets/sprites/coin.png");
 loadSprite("platform", "assets/sprites/basic_platform.png");
-loadSprite("portal", "assets/sprites/portal.png");  
-loadSprite("frenzy", "assets/sprites/geometry_frenzy.png")
-loadSprite("lvl1_platform", "assets/textures/lvl1/lvl1_platform.png")
-loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png")
-loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png")
+loadSprite("portal", "assets/sprites/portal.png");
+loadSprite("frenzy", "assets/sprites/geometry_frenzy.png");
+loadSprite("lvl1_platform", "assets/textures/lvl1/lvl1_platform.png");
+loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png");
+loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png");
 
 scene("game", ({ levelId } = { levelId: 0 }) => {
+  const map1 = add([
+    sprite("map1", { width: width() * width(), height: height() * 1.5 }),
+  ]);
   gravity(3200);
   const player = add([
     sprite("sapiens"),
-    pos(-80, 750),
+    pos(-50, 750),
     area(),
     scale(1),
     // makes it fall to gravity and jumpable
@@ -40,8 +43,15 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     }
   });
   player.onCollide("spike", () => {
+    console.log(player);
     shake();
-    go("lose");
+    go("game");
+  });
+
+  player.onCollide("platform", (p) => {
+    if (player.pos.x + 64 === p.pos.x) {
+      go("game");
+    }
   });
 
   player.onCollide("portal", () => {
@@ -54,10 +64,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     }
   });
 });
-scene("lose", () => {
-  add([text("You Lose")]);
-  onKeyPress(() => go("game"));
-});
+
 scene("win", () => {
   add([text("You Win")]);
   onKeyPress(() => go("game"));
