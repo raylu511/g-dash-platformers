@@ -32,7 +32,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   const level = addLevel(LEVELS[levelId ?? 0], levelConf);
   onKeyDown("space", () => {
     if (player.isGrounded()) {
-      player.jump(1020);
+      player.jump(1050);
     }
   });
   player.onCollide("spike", () => {
