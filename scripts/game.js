@@ -49,7 +49,11 @@ scene("start", () => {
 });
 
 // Game Scene
+let score = 0;
+let attempts = 0;
 scene("game", ({ levelId } = { levelId: 0 }) => {
+  score = 0;
+
   const map1 = add([
     sprite("map1", { width: width() * width(), height: height() * 1.5 }),
   ]);
@@ -64,8 +68,39 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     move(RIGHT, 500),
   ]);
 
+  const attemptsLabel = add([
+    text(attempts),
+    origin("center"),
+    pos(width() / 2, 80),
+    fixed(),
+  ]);
+
+  function addAttempt() {
+    attempts++;
+    attemptsLabel.text = "Attempts " + attempts;
+    // play("attempts")
+  }
+
+  addAttempt();
+
+  const scoreLabel = add([
+    text("Score " + score),
+    origin("center"),
+    pos(250, 80),
+    fixed(),
+  ]);
+
+  function addScore() {
+    score++;
+    scoreLabel.text = "Score " + score;
+    // play("attempts")
+  }
+
+  // display attempts
+
   player.onUpdate(() => {
     camPos(player.pos);
+    addScore();
   });
 
   // add level to scene
