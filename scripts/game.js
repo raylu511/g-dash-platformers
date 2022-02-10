@@ -16,6 +16,39 @@ loadSprite("lvl1_platform", "assets/textures/lvl1/lvl1_platform.png");
 loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png");
 loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png");
 
+// Start Scene
+scene("start", () => {
+  const mainScreen = add([
+    sprite("main_screen", { height: 1000, width: 1000 }),
+    pos(width() / 2, height() / 2),
+    origin("center"),
+  ]);
+  const button = add([
+    text("Start"),
+    origin("center"),
+    pos(width() / 2, height() / 2),
+    area(),
+    scale(1),
+    "button",
+  ]);
+  button.onClick(() => go("game"));
+  button.onUpdate(() => {
+    if (button.isHovering()) {
+      const t = time() * 10;
+      button.color = rgb(
+        wave(0, 255, t),
+        wave(0, 255, t + 2),
+        wave(0, 255, t + 4)
+      );
+      button.scale = vec2(1.2);
+    } else {
+      button.scale = vec2(1);
+      button.color = rgb();
+    }
+  });
+});
+
+// Game Scene
 scene("game", ({ levelId } = { levelId: 0 }) => {
   const map1 = add([
     sprite("map1", { width: width() * width(), height: height() * 1.5 }),
@@ -65,8 +98,11 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   });
 });
 
+// Win Scene
 scene("win", () => {
   add([text("You Win")]);
   onKeyPress(() => go("game"));
 });
-go("game");
+
+// Starts the start scene
+go("start");
