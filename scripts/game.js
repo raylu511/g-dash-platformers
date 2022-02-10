@@ -87,9 +87,9 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     scale(1),
     // makes it fall to gravity and jumpable
     body(),
-    move(RIGHT, 350),
+    move(RIGHT, 500),
     // the custom component we defined above
-    origin("bot"),
+    // origin(""),
   ]);
 
   player.onUpdate(() => {
