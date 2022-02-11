@@ -40,6 +40,9 @@ const LEVELS = [
     b: () => [sprite("lvl1_platform"), solid(), area(), "block"],
     p: () => [sprite("lvl1_platform"), solid(), area(), "platform"],
     s: () => [sprite("lvl1_spike"), area(), "spike"],
-    "@": () => [sprite("portal"), area({ scale: 0.5 }), "portal"],
+    "@": () => [sprite("portal", {
+      height: height(),
+      width: 50
+    }),solid(), area({ scale: 0.5 }), origin("center"), "portal"],
   };
   
