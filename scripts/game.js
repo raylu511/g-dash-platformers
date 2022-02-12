@@ -54,8 +54,28 @@ scene("start", () => {
 let score = 0;
 let attempts = 0;
 scene("game", ({ levelId } = { levelId: 0 }) => {
+  layers([
+    "bg",
+    "game",
+    "ui",
+], "game")
   if(!isNewLvl) score = 0;
 
+  loop(3, () => { add([
+    sprite('map1', {
+     width: width() * width(), height: height(), flipY: true
+    }),
+    layer('bg'),
+    scale(5),
+    
+    color(rgb(
+      wave(0, 255,time()),
+      wave(0, 255, time()+ 2),
+      wave(0, 255, time() + 4)
+    )) 
+    
+  ])})
+  
   
   gravity(3200);
   const player = add([
@@ -67,7 +87,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     body(),
     move(RIGHT, 500),
   ]);
-
+  loop(3, () => { }) 
   const attemptsLabel = add([
     text(attempts),
     origin("center"),
