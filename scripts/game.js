@@ -20,7 +20,7 @@ let isNewLvl = false;
 let jumping;
 // Game Scene
 let score = 0;
-let attempts = 0;
+let attempts = 1;
 // Start Scene
 scene("start", () => {
   const mainScreen = add([
@@ -99,7 +99,6 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   ]);
 
   function addAttempt() {
-    attempts++;
     attemptsLabel.text = "Attempts " + attempts;
     // play("attempts")
   }
@@ -141,7 +140,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     }
   });
   player.onCollide("spike", () => {
-    console.log(player);
+    attempts ++;
     shake();
     isNewLvl = false;
     go("game");
@@ -149,6 +148,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
 
   player.onCollide("platform", (p) => {
     if (player.pos.x + 32 === p.pos.x) {
+      attempts ++;
       isNewLvl = false;
       go("game");
     }
@@ -170,7 +170,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
 scene("win", () => {
   add([text("You Win")]);
   score = 0;
-  attempts = 0;
+  attempts = 1;
   onKeyPress(() => go("start"));
   
 });
