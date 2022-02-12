@@ -18,6 +18,9 @@ loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png");
 loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png");
 let isNewLvl = false;
 let jumping;
+// Game Scene
+let score = 0;
+let attempts = 0;
 // Start Scene
 scene("start", () => {
   const mainScreen = add([
@@ -50,9 +53,7 @@ scene("start", () => {
   });
 });
 
-// Game Scene
-let score = 0;
-let attempts = 0;
+
 scene("game", ({ levelId } = { levelId: 0 }) => {
   layers([
     "bg",
@@ -127,7 +128,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
       player.angle = 0;
       jumping = false;
     }
-    if(jumping) player.angle += 26.2;
+    if(jumping) player.angle += 500.2;
   });
 
 
@@ -168,6 +169,8 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
 // Win Scene
 scene("win", () => {
   add([text("You Win")]);
+  score = 0;
+  attempts = 0;
   onKeyPress(() => go("start"));
   
 });
