@@ -17,7 +17,7 @@ loadSprite("lvl1_platform", "assets/textures/lvl1/lvl1_platform.png");
 loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png");
 loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png");
 let isNewLvl = false;
-
+let jumping;
 // Start Scene
 scene("start", () => {
   const mainScreen = add([
@@ -83,6 +83,8 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     pos(-50, 750),
     area(),
     scale(1),
+    origin("center"),
+    rotate(0),
     // makes it fall to gravity and jumpable
     body(),
     move(RIGHT, 500),
@@ -121,13 +123,20 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   player.onUpdate(() => {
     camPos(player.pos);
     addScore();
+    if(player.isGrounded()) {
+      player.angle = 0;
+      jumping = false;
+    }
+    if(jumping) player.angle += 26.2;
   });
+
 
   // add level to scene
   const level = addLevel(LEVELS[levelId ?? 0], levelConf);
   onKeyDown("space", () => {
     if (player.isGrounded()) {
       player.jump(1050);
+      jumping = true;
     }
   });
   player.onCollide("spike", () => {
@@ -138,7 +147,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   });
 
   player.onCollide("platform", (p) => {
-    if (player.pos.x + 64 === p.pos.x) {
+    if (player.pos.x + 32 === p.pos.x) {
       isNewLvl = false;
       go("game");
     }
