@@ -1,5 +1,6 @@
 kaboom({
-  background: [0, 0, 0, 0],
+  background: [0, 0, 0],
+  crisp: true
 });
 
 // Load Assets
@@ -55,9 +56,7 @@ let attempts = 0;
 scene("game", ({ levelId } = { levelId: 0 }) => {
   if(!isNewLvl) score = 0;
 
-  const map1 = add([
-    sprite("map1", { width: width() * width(), height: height() * 1.5 }),
-  ]);
+  
   gravity(3200);
   const player = add([
     sprite("sapiens"),
@@ -140,8 +139,10 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
 // Win Scene
 scene("win", () => {
   add([text("You Win")]);
-  onKeyPress(() => go("game"));
+  onKeyPress(() => go("start"));
+  
 });
 
 // Starts the start scene
 go("start");
+

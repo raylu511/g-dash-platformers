@@ -3,10 +3,10 @@ const LEVELS = [
     [
       "                                                                                                                                        ",
       "                                                                                                                                        ",
-      "                                                                                                                                        ",
-      "                                                                                                                                        ",
-      "                                                                                                                                        ",
-      "                                                                                                                                       @",
+      "                                                                    p       p                                                           ",
+      "                                                                    r       r                                                           ",
+      "                                                                s       s       s                                                       ",
+      "                                                                p       p       p                                                      @",
       "                                                        pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
       "                                                                                                                                        ",
       "                                                   ppp                                                                                  ",
@@ -40,6 +40,7 @@ const LEVELS = [
     b: () => [sprite("lvl1_platform"), solid(), area(), "block"],
     p: () => [sprite("lvl1_platform"), solid(), area(), "platform"],
     s: () => [sprite("lvl1_spike"), area(), "spike"],
+    r: () => [sprite("lvl1_spike", {flipY: true}), area(), "spike"],
     "@": () => [sprite("portal", {
       height: height(),
       width: 50
