@@ -1,6 +1,6 @@
 kaboom({
   background: [0, 0, 0],
-  crisp: true
+  crisp: true,
 });
 
 // Load Assets
@@ -28,56 +28,117 @@ scene("start", () => {
     pos(width() / 2, height() / 2),
     origin("center"),
   ]);
-  const button = add([
+  const start = add([
     text("Start"),
+    origin("center"),
+    pos(width() / 2, height() / 2 - 100),
+    area(),
+    scale(1),
+    "start",
+  ]);
+  const rules = add([
+    text("Rules", {
+      size: 70,
+      letterSpacing: 0,
+    }),
     origin("center"),
     pos(width() / 2, height() / 2),
     area(),
     scale(1),
-    "button",
+    "rules",
   ]);
-  button.onClick(() => go("game"));
-  button.onUpdate(() => {
-    if (button.isHovering()) {
+  const developers = add([
+    text("Developers", {
+      size: 70,
+      letterSpacing: -5,
+    }),
+    origin("center"),
+    pos(width() / 2, height() / 2 + 100),
+    area(),
+    scale(1),
+    "developers",
+  ]);
+
+  // Start logic
+  start.onClick(() => go("game"));
+  start.onUpdate(() => {
+    if (start.isHovering()) {
       const t = time() * 10;
-      button.color = rgb(
+      start.color = rgb(
         wave(0, 255, t),
         wave(0, 255, t + 2),
         wave(0, 255, t + 4)
       );
-      button.scale = vec2(1.2);
+      start.scale = vec2(1.2);
     } else {
-      button.scale = vec2(1);
-      button.color = rgb();
+      start.scale = vec2(1);
+      start.color = rgb();
+    }
+  });
+
+  // Rules logic
+  rules.onClick(() => go("rules"));
+  rules.onUpdate(() => {
+    if (rules.isHovering()) {
+      const t = time() * 10;
+      rules.color = rgb(
+        wave(0, 255, t),
+        wave(0, 255, t + 2),
+        wave(0, 255, t + 4)
+      );
+      rules.scale = vec2(1.2);
+    } else {
+      rules.scale = vec2(1);
+      rules.color = rgb();
+    }
+  });
+
+  // Developers Logic
+  // developers.onClick(() => go("developers"));
+  developers.onUpdate(() => {
+    if (developers.isHovering()) {
+      const t = time() * 10;
+      developers.color = rgb(
+        wave(0, 255, t),
+        wave(0, 255, t + 2),
+        wave(0, 255, t + 4)
+      );
+      developers.scale = vec2(1.2);
+    } else {
+      developers.scale = vec2(1);
+      developers.color = rgb();
     }
   });
 });
 
 
+// Game Scene
 scene("game", ({ levelId } = { levelId: 0 }) => {
-  layers([
-    "bg",
-    "game",
-    "ui",
-], "game")
-  if(!isNewLvl) score = 0;
+  layers(["bg", "game", "ui"], "game");
+  if (!isNewLvl) score = 0;
 
-  loop(3, () => { add([
-    sprite('map1', {
-     width: width() * width(), height: height(), flipY: true
-    }),
-    layer('bg'),
-    scale(5),
-    
-    color(rgb(
-      wave(0, 255,time()),
-      wave(0, 255, time()+ 2),
-      wave(0, 255, time() + 4)
-    )) 
-    
-  ])})
-  
-  
+  loop(3, () => {
+    add([
+      sprite("map1", {
+        width: width() * width(),
+        height: height(),
+        flipY: true,
+      }),
+      layer("bg"),
+      scale(5),
+      pos(0, 0),
+      area(),
+      color(
+        rgb(
+          wave(0, 255, time()),
+          wave(0, 255, time() + 2),
+          wave(0, 255, time() + 4)
+        )
+      ),
+      "map1",
+    ]);
+  });
+
   gravity(3200);
   const player = add([
     sprite("sapiens"),
@@ -90,7 +151,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     body(),
     move(RIGHT, 500),
   ]);
-  loop(3, () => { }) 
+  loop(3, () => {});
   const attemptsLabel = add([
     text(attempts),
     origin("center"),
@@ -123,13 +184,12 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   player.onUpdate(() => {
     camPos(player.pos);
     addScore();
-    if(player.isGrounded()) {
+    if (player.isGrounded()) {
       player.angle = 0;
       jumping = false;
     }
-    if(jumping) player.angle += 500.2;
+    if (jumping) player.angle += 500.2;
   });
-
 
   // add level to scene
   const level = addLevel(LEVELS[levelId ?? 0], levelConf);
@@ -140,7 +200,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     }
   });
   player.onCollide("spike", () => {
-    attempts ++;
+    attempts++;
     shake();
     isNewLvl = false;
     go("game");
@@ -148,7 +208,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
 
   player.onCollide("platform", (p) => {
     if (player.pos.x + 32 === p.pos.x) {
-      attempts ++;
+      attempts++;
       isNewLvl = false;
       go("game");
     }
@@ -165,6 +225,124 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     }
   });
 });
+function late(t) {
+  let timer = 0
+  return {
+    add() {
+      this.hidden = true
+    },
+    update() {
+      timer += dt()
+      if (timer >= t) {
+        this.hidden = false
+      }
+    },
+  }
+}
+// Rules Scene 
+scene("rules", () => {
+  const mainScreen = add([
+    sprite("main_screen", { height: 1200, width: width() }),
+    pos(width() / 2, height() / 2),
+    origin("center"),
+  ]);
+  add([
+    text("Rules"),
+    origin("center"),
+    pos(width() / 2, height() / 12)
+  ])
+  add([
+    text("Clear each level by reaching the portal at the end",{
+      letterSpacing: 0,
+      size: 40
+    }),
+    lifespan(3),
+    origin("center"),
+    pos(width() / 2, height() / 2)
+  ])
+  add([
+    text("Each level comprises of different obstacles",{
+      letterSpacing: 0,
+      size: 40
+    }),
+    lifespan(6),
+    late(3),
+    origin("center"),
+    pos(width() / 2, height() / 2)
+  ])
+  add([
+    text("To avoid colliding with an obstacle",{
+      letterSpacing: 0,
+      size: 40
+    }),
+    lifespan(9),
+    late(6),
+    origin("center"),
+    pos(width() / 2, height() / 2)
+  ])
+  add([
+    text("Press 'spacebar' to jump over them",{
+      letterSpacing: 0,
+      size: 40
+    }),
+    lifespan(12),
+    late(9),
+    origin("center"),
+    pos(width() / 2, height() / 2)
+  ])
+  const playAgain = add([
+    text("Read Again",{
+      letterSpacing: 0,
+      lineSpacing: 0,
+      size: 55
+    }),
+    late(12),
+    area(),
+    origin("center"),
+    pos(width() / 2 - 200, height() / 2)
+  ])
+  const mainMenu = add([
+    text("Go back",{
+      letterSpacing: 0,
+      size: 55
+    }),
+    late(12),
+    area(),
+    origin("center"),
+    pos(width() / 2 + 200, height() / 2)
+  ])
+  playAgain.onClick(() => go("rules"));
+  playAgain.onUpdate(() => {
+    if (playAgain.isHovering()) {
+      const t = time() * 10;
+      playAgain.color = rgb(
+        wave(0, 255, t),
+        wave(0, 255, t + 2),
+        wave(0, 255, t + 4)
+      );
+      playAgain.scale = vec2(1.2);
+    } else {
+      playAgain.scale = vec2(1);
+      playAgain.color = rgb();
+    }
+  });
+  mainMenu.onClick(() => go("start"));
+  mainMenu.onUpdate(() => {
+    if (mainMenu.isHovering()) {
+      const t = time() * 10;
+      mainMenu.color = rgb(
+        wave(0, 255, t),
+        wave(0, 255, t + 2),
+        wave(0, 255, t + 4)
+      );
+      mainMenu.scale = vec2(1.2);
+    } else {
+      mainMenu.scale = vec2(1);
+      mainMenu.color = rgb();
+    }
+  });
+});
+
 
 // Win Scene
 scene("win", () => {
@@ -172,9 +350,7 @@ scene("win", () => {
   score = 0;
   attempts = 1;
   onKeyPress(() => go("start"));
-  
 });
 
 // Starts the start scene
 go("start");
-
