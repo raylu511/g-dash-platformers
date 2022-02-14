@@ -16,6 +16,8 @@ loadSprite("frenzy", "assets/sprites/geometry_frenzy.png");
 loadSprite("lvl1_platform", "assets/textures/lvl1/lvl1_platform.png");
 loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png");
 loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png");
+loadSound("coin_sound", "assets/sounds/coin_sound.mp3");
+
 let isNewLvl = false;
 let jumping;
 // Game Scene
@@ -94,7 +96,7 @@ scene("start", () => {
   });
 
   // Developers Logic
-  // developers.onClick(() => go("developers"));
+  developers.onClick(() => go("developers"));
   developers.onUpdate(() => {
     if (developers.isHovering()) {
       const t = time() * 10;
@@ -110,7 +112,6 @@ scene("start", () => {
     }
   });
 });
-
 
 // Game Scene
 scene("game", ({ levelId } = { levelId: 0 }) => {
@@ -199,6 +200,12 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
       jumping = true;
     }
   });
+
+  player.onCollide("coin", (c) => {
+    destroy(c);
+    play("coin_sound")
+  });
+
   player.onCollide("spike", () => {
     attempts++;
     shake();
@@ -226,91 +233,87 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   });
 });
 function late(t) {
-  let timer = 0
+  let timer = 0;
   return {
     add() {
-      this.hidden = true
+      this.hidden = true;
     },
     update() {
-      timer += dt()
+      timer += dt();
       if (timer >= t) {
-        this.hidden = false
+        this.hidden = false;
       }
     },
-  }
+  };
 }
-// Rules Scene 
+// Rules Scene
 scene("rules", () => {
   const mainScreen = add([
     sprite("main_screen", { height: 1200, width: width() }),
     pos(width() / 2, height() / 2),
     origin("center"),
   ]);
+  add([text("Rules"), origin("center"), pos(width() / 2, height() / 12)]);
   add([
-    text("Rules"),
-    origin("center"),
-    pos(width() / 2, height() / 12)
-  ])
-  add([
-    text("Clear each level by reaching the portal at the end",{
+    text("Clear each level by reaching the portal at the end", {
       letterSpacing: 0,
-      size: 40
+      size: 35,
     }),
     lifespan(3),
     origin("center"),
-    pos(width() / 2, height() / 2)
-  ])
+    pos(width() / 2, height() / 2),
+  ]);
   add([
-    text("Each level comprises of different obstacles",{
+    text("Each level comprises of different obstacles", {
       letterSpacing: 0,
-      size: 40
+      size: 35,
     }),
     lifespan(6),
     late(3),
     origin("center"),
-    pos(width() / 2, height() / 2)
-  ])
+    pos(width() / 2, height() / 2),
+  ]);
   add([
-    text("To avoid colliding with an obstacle",{
+    text("To avoid colliding with an obstacle", {
       letterSpacing: 0,
-      size: 40
+      size: 35,
     }),
     lifespan(9),
     late(6),
     origin("center"),
-    pos(width() / 2, height() / 2)
-  ])
+    pos(width() / 2, height() / 2),
+  ]);
   add([
-    text("Press 'spacebar' to jump over them",{
+    text("Press 'spacebar' to jump over them", {
       letterSpacing: 0,
-      size: 40
+      size: 35,
     }),
     lifespan(12),
     late(9),
     origin("center"),
-    pos(width() / 2, height() / 2)
-  ])
+    pos(width() / 2, height() / 2),
+  ]);
   const playAgain = add([
-    text("Read Again",{
+    text("Read Again", {
       letterSpacing: 0,
       lineSpacing: 0,
-      size: 55
+      size: 55,
     }),
     late(12),
     area(),
     origin("center"),
-    pos(width() / 2 - 200, height() / 2)
-  ])
+    pos(width() / 2 - 200, height() / 2),
+  ]);
   const mainMenu = add([
-    text("Go back",{
+    text("Go back", {
       letterSpacing: 0,
-      size: 55
+      size: 55,
     }),
     late(12),
     area(),
     origin("center"),
-    pos(width() / 2 + 200, height() / 2)
-  ])
+    pos(width() / 2 + 200, height() / 2),
+  ]);
   playAgain.onClick(() => go("rules"));
   playAgain.onUpdate(() => {
     if (playAgain.isHovering()) {
@@ -343,7 +346,16 @@ scene("rules", () => {
   });
 });
 
-
+// Developer Scene
+scene("developers", () => {
+  const mainScreen = add([
+    sprite("main_screen", { height: 1200, width: width() }),
+    pos(width() / 2, height() / 2),
+    origin("center"),
+  ]);
+  add([text("Developers"), origin("center"), pos(width() / 2, height() / 12)]);
+  
+});
 // Win Scene
 scene("win", () => {
   add([text("You Win")]);
