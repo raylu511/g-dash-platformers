@@ -160,7 +160,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   gravity(3200);
   const player = add([
     sprite("sapiens"),
-    pos(0, 750),
+    pos(100, 750),
     area(),
     scale(1),
     origin("center"),
@@ -255,11 +255,11 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
       go("win");
     }
   });
-  player.onCollide("reversePortal", () => {
-    player.move(0, -500)
-
-  })
+ 
+   
 });
+
+
 
 // Rules Scene
 scene("rules", () => {
