@@ -159,7 +159,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   gravity(3200);
   const player = add([
     sprite("sapiens"),
-    pos(-50, 750),
+    pos(100, 750),
     area(),
     scale(1),
     origin("center"),
@@ -252,7 +252,11 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
       go("win");
     }
   });
+ 
+   
 });
+
+
 
 // Rules Scene
 scene("rules", () => {
