@@ -130,6 +130,7 @@ scene("start", () => {
 
 // Game Scene
 scene("game", ({ levelId } = { levelId: 0 }) => {
+  
   layers(["bg", "game", "ui"], "game");
 
   if (!isNewLvl) score = 0;
@@ -159,7 +160,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   gravity(3200);
   const player = add([
     sprite("sapiens"),
-    pos(-50, 750),
+    pos(0, 750),
     area(),
     scale(1),
     origin("center"),
@@ -167,8 +168,9 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     // makes it respond to gravity and gives it jump method
 
     body(),
-    move(RIGHT, 500),
+    move(0, 500)
   ]);
+  
   const attemptsLabel = add([
     text(attempts, {
       size: 50,
@@ -203,6 +205,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   // display attempts
 
   player.onUpdate(() => {
+    debug.log(player.pos)
     camPos(player.pos);
     addScore();
     if (player.isGrounded()) {
@@ -252,6 +255,10 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
       go("win");
     }
   });
+  player.onCollide("reversePortal", () => {
+    player.move(0, -500)
+
+  })
 });
 
 // Rules Scene
