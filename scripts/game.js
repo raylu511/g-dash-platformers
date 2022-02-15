@@ -17,6 +17,7 @@ loadSprite("lvl1_platform", "assets/textures/lvl1/lvl1_platform.png");
 loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png");
 loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png");
 loadSound("coin_sound", "assets/sounds/coin_sound.mp3");
+loadSound("lvl1Sound", "assets/sounds/skrillex.mp3")
 
 let isNewLvl = false;
 let jumping;
@@ -117,7 +118,7 @@ scene("start", () => {
 scene("game", ({ levelId } = { levelId: 0 }) => {
   layers(["bg", "game", "ui"], "game");
   if (!isNewLvl) score = 0;
-
+  const music = play("lvl1Sound")
   loop(3, () => {
     add([
       sprite("map1", {
@@ -148,7 +149,8 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     scale(1),
     origin("center"),
     rotate(0),
-    // makes it fall to gravity and jumpable
+    // makes it respond to gravity and gives it jump method
+
     body(),
     move(RIGHT, 500),
   ]);
@@ -210,6 +212,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   });
 
   player.onCollide("spike", () => {
+    music.stop()
     attempts++;
     shake();
     isNewLvl = false;
@@ -218,6 +221,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
 
   player.onCollide("platform", (p) => {
     if (player.pos.x + 32 === p.pos.x) {
+      music.stop()
       attempts++;
       isNewLvl = false;
       go("game");

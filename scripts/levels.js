@@ -2,6 +2,22 @@ const LEVELS = [
   [
     "                                                                                                                                        ",
     "                                                                                                                                        ",
+    "                                                                                                                                        ",
+    "                                                                pp          pppppp                                                              ",
+    "                                                                rr pp       rrrrrr                                                              ",
+    "                                               ss   ss     s       rr                                                                                                ",
+    "                                           pppppppppppppppppppp                                                                                                                ",
+    "                                     pp                        ppp          ppppppppp                                                                               ",
+    "                                pp                                ppppppppppppppppppp     pp     ppp                                                                                   ",
+    "                           pp                                                                                                     ",
+    "                      pp                    ss     s    s      c                                                                                                       ",
+    "                 pp          ppppppppppppppppppppppppppppppppppppppppppppppppppppppppp             ",
+    "       pppppppssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                          @",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  ],
+  [
+    "                                                                                                                                        ",
+    "                                                                                                                                        ",
     "                                                                    p       p                                                           ",
     "                                                                    r       r                ppp          c                             ",
     "                                                                s       s       s                                                       ",
@@ -14,23 +30,8 @@ const LEVELS = [
     "                                                                                                                                       ",
     "                      s      ss          pppssssssssssssssssss                                                                          ",
     "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb                                                                          ",
-  ],
-  [
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                                                                        ",
-    "                                                                                 s                                              p       ",
-    "          p            s      ss          sss                 p         pp       p                   ppp                        p      @",
-    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-  ],
+  ]
+
 ];
 
 const levelConf = {
