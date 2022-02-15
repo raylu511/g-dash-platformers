@@ -154,7 +154,9 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   ]);
   loop(3, () => {});
   const attemptsLabel = add([
-    text(attempts),
+    text(attempts, {
+      size:50
+    }),
     origin("center"),
     pos(width() / 2, 80),
     fixed(),
@@ -168,7 +170,9 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   addAttempt();
 
   const scoreLabel = add([
-    text("Score " + score),
+    text("Score " + score, {
+      size:50
+    }),
     origin("center"),
     pos(250, 80),
     fixed(),
@@ -203,7 +207,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
 
   player.onCollide("coin", (c) => {
     destroy(c);
-    play("coin_sound")
+    play("coin_sound");
   });
 
   player.onCollide("spike", () => {
@@ -257,7 +261,7 @@ scene("rules", () => {
   add([
     text("Clear each level by reaching the portal at the end", {
       letterSpacing: 0,
-      size: 35,
+      size: 30,
     }),
     lifespan(3),
     origin("center"),
@@ -266,7 +270,7 @@ scene("rules", () => {
   add([
     text("Each level comprises of different obstacles", {
       letterSpacing: 0,
-      size: 35,
+      size: 30,
     }),
     lifespan(6),
     late(3),
@@ -276,7 +280,7 @@ scene("rules", () => {
   add([
     text("To avoid colliding with an obstacle", {
       letterSpacing: 0,
-      size: 35,
+      size: 30,
     }),
     lifespan(9),
     late(6),
@@ -286,7 +290,7 @@ scene("rules", () => {
   add([
     text("Press 'spacebar' to jump over them", {
       letterSpacing: 0,
-      size: 35,
+      size: 30,
     }),
     lifespan(12),
     late(9),
@@ -354,11 +358,10 @@ scene("developers", () => {
     origin("center"),
   ]);
   add([text("Developers"), origin("center"), pos(width() / 2, height() / 12)]);
-  
 });
 // Win Scene
 scene("win", () => {
-  add([text("You Win")]);
+  add([text("You Win"), pos(width() / 2, height() / 2), origin("center")]);
   score = 0;
   attempts = 1;
   onKeyPress(() => go("start"));
