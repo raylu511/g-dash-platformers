@@ -26,14 +26,14 @@ let attempts = 1;
 // Start Scene
 scene("start", () => {
   const mainScreen = add([
-    sprite("main_screen", { height: 1000, width: 1000 }),
+    sprite("main_screen", { height: height(), width: 1000 }),
     pos(width() / 2, height() / 2),
     origin("center"),
   ]);
   const start = add([
     text("Start"),
     origin("center"),
-    pos(width() / 2, height() / 2 - 100),
+    pos(width() / 2, height() / 2 - 50),
     area(),
     scale(1),
     "start",
@@ -44,22 +44,22 @@ scene("start", () => {
       letterSpacing: 0,
     }),
     origin("center"),
-    pos(width() / 2, height() / 2),
+    pos(width() / 2, height() / 2 + 50),
     area(),
     scale(1),
     "rules",
   ]);
-  const developers = add([
-    text("Developers", {
-      size: 70,
-      letterSpacing: -5,
-    }),
-    origin("center"),
-    pos(width() / 2, height() / 2 + 100),
-    area(),
-    scale(1),
-    "developers",
-  ]);
+  // const developers = add([
+  //   text("Developers", {
+  //     size: 70,
+  //     letterSpacing: -5,
+  //   }),
+  //   origin("center"),
+  //   pos(width() / 2, height() / 2 + 100),
+  //   area(),
+  //   scale(1),
+  //   "developers",
+  // ]);
 
   // Start logic
   start.onClick(() => go("game"));
@@ -96,21 +96,21 @@ scene("start", () => {
   });
 
   // Developers Logic
-  developers.onClick(() => go("developers"));
-  developers.onUpdate(() => {
-    if (developers.isHovering()) {
-      const t = time() * 10;
-      developers.color = rgb(
-        wave(0, 255, t),
-        wave(0, 255, t + 2),
-        wave(0, 255, t + 4)
-      );
-      developers.scale = vec2(1.2);
-    } else {
-      developers.scale = vec2(1);
-      developers.color = rgb();
-    }
-  });
+  // developers.onClick(() => go("developers"));
+  // developers.onUpdate(() => {
+  //   if (developers.isHovering()) {
+  //     const t = time() * 10;
+  //     developers.color = rgb(
+  //       wave(0, 255, t),
+  //       wave(0, 255, t + 2),
+  //       wave(0, 255, t + 4)
+  //     );
+  //     developers.scale = vec2(1.2);
+  //   } else {
+  //     developers.scale = vec2(1);
+  //     developers.color = rgb();
+  //   }
+  // });
 });
 
 // Game Scene
@@ -152,7 +152,6 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     body(),
     move(RIGHT, 500),
   ]);
-  loop(3, () => {});
   const attemptsLabel = add([
     text(attempts, {
       size:50
@@ -253,7 +252,7 @@ function late(t) {
 // Rules Scene
 scene("rules", () => {
   const mainScreen = add([
-    sprite("main_screen", { height: 1200, width: width() }),
+    sprite("main_screen", { height: height(), width: width() }),
     pos(width() / 2, height() / 2),
     origin("center"),
   ]);
@@ -359,6 +358,7 @@ scene("developers", () => {
   ]);
   add([text("Developers"), origin("center"), pos(width() / 2, height() / 12)]);
 });
+
 // Win Scene
 scene("win", () => {
   add([text("You Win"), pos(width() / 2, height() / 2), origin("center")]);
