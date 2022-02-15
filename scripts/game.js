@@ -17,6 +17,7 @@ loadSprite("lvl1_platform", "assets/textures/lvl1/lvl1_platform.png");
 loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png");
 loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png");
 loadSound("coin_sound", "assets/sounds/coin_sound.mp3");
+loadSound("lvl1Sound", "assets/sounds/skrillex.mp3");
 function late(t) {
   let timer = 0;
   return {
@@ -31,6 +32,7 @@ function late(t) {
     },
   };
 }
+
 let isNewLvl = false;
 let jumping;
 // Game Scene
@@ -162,7 +164,8 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     scale(1),
     origin("center"),
     rotate(0),
-    // makes it fall to gravity and jumpable
+    // makes it respond to gravity and gives it jump method
+
     body(),
     move(RIGHT, 500),
   ]);
@@ -212,7 +215,6 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   // add level to scene
   const level = addLevel(LEVELS[levelId ?? 0], levelConf);
 
-  
   onKeyDown("space", () => {
     if (player.isGrounded()) {
       player.jump(1050);
