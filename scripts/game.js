@@ -17,7 +17,20 @@ loadSprite("lvl1_platform", "assets/textures/lvl1/lvl1_platform.png");
 loadSprite("lvl1_spike", "assets/textures/lvl1/lvl1_spike.png");
 loadSprite("sapiens", "assets/textures/cube_skins/sapiens.png");
 loadSound("coin_sound", "assets/sounds/coin_sound.mp3");
-
+function late(t) {
+  let timer = 0;
+  return {
+    add() {
+      this.hidden = true;
+    },
+    update() {
+      timer += dt();
+      if (timer >= t) {
+        this.hidden = false;
+      }
+    },
+  };
+}
 let isNewLvl = false;
 let jumping;
 // Game Scene
@@ -116,6 +129,7 @@ scene("start", () => {
 // Game Scene
 scene("game", ({ levelId } = { levelId: 0 }) => {
   layers(["bg", "game", "ui"], "game");
+
   if (!isNewLvl) score = 0;
 
   loop(3, () => {
@@ -154,7 +168,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   ]);
   const attemptsLabel = add([
     text(attempts, {
-      size:50
+      size: 50,
     }),
     origin("center"),
     pos(width() / 2, 80),
@@ -170,7 +184,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
 
   const scoreLabel = add([
     text("Score " + score, {
-      size:50
+      size: 50,
     }),
     origin("center"),
     pos(250, 80),
@@ -197,6 +211,8 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
 
   // add level to scene
   const level = addLevel(LEVELS[levelId ?? 0], levelConf);
+
+  
   onKeyDown("space", () => {
     if (player.isGrounded()) {
       player.jump(1050);
@@ -235,20 +251,7 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     }
   });
 });
-function late(t) {
-  let timer = 0;
-  return {
-    add() {
-      this.hidden = true;
-    },
-    update() {
-      timer += dt();
-      if (timer >= t) {
-        this.hidden = false;
-      }
-    },
-  };
-}
+
 // Rules Scene
 scene("rules", () => {
   const mainScreen = add([
@@ -347,16 +350,6 @@ scene("rules", () => {
       mainMenu.color = rgb();
     }
   });
-});
-
-// Developer Scene
-scene("developers", () => {
-  const mainScreen = add([
-    sprite("main_screen", { height: 1200, width: width() }),
-    pos(width() / 2, height() / 2),
-    origin("center"),
-  ]);
-  add([text("Developers"), origin("center"), pos(width() / 2, height() / 12)]);
 });
 
 // Win Scene
