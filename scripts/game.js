@@ -365,6 +365,8 @@ scene("rules", () => {
 // Win Scene
 scene("win", () => {
   add([text("You Win"), pos(width() / 2, height() / 2), origin("center")]);
+  add([text("Total Attempts: " + attempts), pos(width() / 2, height() / 2 + 60), origin("center")]);
+  add([text("Score: " + score), pos(width() / 2, height() / 2 + 120), origin("center")]);
   score = 0;
   attempts = 1;
   onKeyPress(() => go("start"));
