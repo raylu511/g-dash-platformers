@@ -57,6 +57,16 @@ const levelConf = {
   s: () => [sprite("lvl1_spike"), area(), "spike"],
   r: () => [sprite("lvl1_spike", { flipY: true }), area(), "spike"],
   c: () => [sprite("coin", { width: 64, height: 64 }), area(), "coin"],
+  t: () => [
+    sprite("portal", {
+      height: height(),
+      width: 50,
+    }),
+    solid(),
+    area({ scale: 0.5 }),
+    origin("center"),
+    "reversePortal",
+  ],
   "@": () => [
     sprite("portal", {
       height: height(),

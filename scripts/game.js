@@ -130,6 +130,7 @@ scene("start", () => {
 
 // Game Scene
 scene("game", ({ levelId } = { levelId: 0 }) => {
+  
   layers(["bg", "game", "ui"], "game");
 
   if (!isNewLvl) score = 0;
@@ -167,8 +168,9 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
     // makes it respond to gravity and gives it jump method
 
     body(),
-    move(RIGHT, 500),
+    move(0, 500)
   ]);
+  
   const attemptsLabel = add([
     text(attempts, {
       size: 50,
