@@ -32,7 +32,7 @@ function late(t) {
     },
   };
 }
-
+let coins = 0;
 let isNewLvl = false;
 let jumping;
 // Game Scene
@@ -224,6 +224,8 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
 
   player.onCollide("coin", (c) => {
     destroy(c);
+    coins += 1;
+    score += 250;
     play("coin_sound");
   });
 
