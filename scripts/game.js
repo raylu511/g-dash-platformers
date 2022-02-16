@@ -205,7 +205,6 @@ scene("game", ({ levelId } = { levelId: 0 }) => {
   // display attempts
 
   player.onUpdate(() => {
-    debug.log(player.pos)
     camPos(player.pos);
     addScore();
     if (player.isGrounded()) {
